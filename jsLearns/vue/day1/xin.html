@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试</title>
+    <script src="../../express-ciel/public/vue.js"></script>
+    <script src="../../express-ciel/public/vue-resource.js"></script>
+    <link rel="stylesheet" href="../../express-ciel/public/bootstrap.css"/>
+</head>
+<body>
+    <div id="applocation">
+         <div class="panel-body form-inline">
+            <label>
+                Name: <input type="text" class="form-control" v-model="name"/>
+             </label>
+             <label>
+                Time: <input type="date" class="form-control" v-model="date"/>
+            </label>
+            <label>
+                Age: <input type="number" class="form-control" v-model="age"/>
+            </label>
+             <button class="btn btn-success" @click="add">插入</button>
+
+             <label>
+                    搜寻关键字: <input type="text" class="form-control" v-model="key"/>
+             </label>
+        </div>
+   <table class="table table-bordered table-hover">
+       <thead>
+           <tr>
+               <th>Id</th>
+               <th>Name</th>
+               <th>Time</th>
+               <th>age</th>
+           </tr>
+       </thead>
+       <tbody>
+           <tr v-for="item in filterList()" :key="item.id">
+               <td>{{item.id}}</td>
+               <td>{{item.name}}</td>
+               <td>{{item.time}}</td>
+               <td>{{item.age}}</td>
+           </tr>
+       </tbody>
+   </table>
+</div>
+    
+</body>
+<script>
+
+    Vue.http.options.root = "https://registry.npm.taobao.org/"; //这里配置绝对路径
+    Vue.http.options.emulateJSON = true;
+
+    var app = new Vue({
+        el:"#applocation",
+        data:{
+            list:[{id:101,name:"america",time:new Date(),age:200},
+                {id:102,name:"english",time:new Date(),age:700},
+                {id:276,name:"russia",time:new Date(),age:159},
+            ],
+            key:null,
+            name:null,
+            date:null,
+            age:null,
+        },
+        methods:{
+            filterList(){
+                if(this.key){
+                  return this.list.filter(element => {
+                        if(element.name.includes(this.key)){
+                            return element;
+                        }
+                    });
+                }else{
+                    return this.list;
+                }
+            },
+            add(){
+                this.$http.get("").then((msg) => { //这里相对路径  拼接 不要加/
+
+                });
+            },
+        }
+    });
+</script>
+</html>

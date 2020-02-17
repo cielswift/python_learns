@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>经典布局ui</title>
+</head>
+<script src="../../express-ciel/public/vue.js"></script>
+<script src="../../express-ciel/public/vue-resource.js"></script>
+<script src="../../express-ciel/public/vue-router.js"></script>
+<link rel="stylesheet" href="../../express-ciel/public/bootstrap.css" />
+<link rel="stylesheet" href="../../express-ciel/public/animate.css" />
+
+<style type="text/css">
+    body,html{
+        margin: 0;
+        padding: 0;
+    }
+    .header{
+        background-color: yellow;
+        height: 80px;
+    }
+    h1{
+        margin: 0;
+        padding: 0;
+        font-size: 15px;
+    }
+    .container{
+        margin: 0;
+        padding: 0;
+        display: flex;
+        width: 100%;
+        height: 200px;
+    }
+    .left{
+        background-color: #2e6da4;
+        flex: 2;
+    }
+    .main{
+        background-color: #5cb85c;
+        flex: 8;
+    }
+</style>
+<body>
+
+<div id="newBrand">
+    <router-view ></router-view>
+    <div class="container">
+        <router-view name="left"></router-view>
+        <router-view name="main"></router-view>
+    </div>
+</div>
+
+
+</body>
+
+<script>
+
+    var headBox = {
+        template:'<h1 class="header">Head头部区域</h1>'
+    };
+    var leftBox = {
+        template: "<h1 class='left'>Left侧边栏区域</h1>"
+    };
+    var mainBox = {
+        template:'<h1 class="main">Main主体区域</h1>'
+    };
+
+    var router = new VueRouter({
+        routes:[
+            {
+                path:"/", components:{
+                    'default': headBox,
+                    'left': leftBox,
+                    'main': mainBox
+                }
+            }
+        ]
+    });
+    var vm = new Vue({
+        el:"#newBrand",
+        data:{
+        },
+        methods:{
+        },
+        //router:router,//将路由规则注册到vm实例中，用来监听URL地址变化，然后展示对应组件
+        router
+    });
+
+
+</script>
+</html>

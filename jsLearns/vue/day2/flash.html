@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>donghua</title>
+  </head>
+  <script src="../../express-ciel/public/vue.js"></script>
+  <script src="../../express-ciel/public/vue-resource.js"></script>
+  <link rel="stylesheet" href="../../express-ciel/public/bootstrap.css" />
+  <link rel="stylesheet" href="../../express-ciel/public/animate.css" />
+  <style>
+    .v-enter-active,
+    .v-leave-active {
+      /*入场动画 //离场动画 */
+      transition: opacity 1s;
+    }
+    .v-enter,
+    .v-leave-to {
+      /*进入之前 ,动画离开之后   */
+      opacity: 0;
+    }
+
+    .qaz-enter-active,
+    .qaz-leave-active {
+      background-color: aquamarine 1s;
+    }
+    .qaz-enter,
+    .qaz-leave-to {
+      opacity: 0;
+    }
+  </style>
+  <body>
+    <div id="app">
+      <transition>
+        <h2 v-if="flag1">{{ text }}</h2>
+      </transition>
+
+      <transition name="qaz">
+        <!--name 区分不同组之间的动画-->
+        <h2 v-if="flag1">{{ text }}</h2>
+      </transition>
+
+      <transition
+        enter-active-class="animated bounceIn"
+        leave-active-class="hinge"
+        :duration="{enter :200 ,leave:400}"
+      >
+        <h2 v-if="flag1">{{ text }}</h2>
+      </transition>
+
+      <transition>
+        <h2 v-if="flag1">{{ text }}</h2>
+      </transition>
+
+      <button type="button" class="btn btn-danger" @click="flag1=!flag1">
+        button
+      </button>
+    </div>
+  </body>
+  <script>
+    var vue = new Vue({
+      el: "#app",
+      data: {
+        text: "ciel swift",
+        flag1: true
+      },
+      methods: {}
+    });
+  </script>
+</html>

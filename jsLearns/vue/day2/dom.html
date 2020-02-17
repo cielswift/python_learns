@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>获取dom元素</title>
+</head>
+<script src="../../express-ciel/public/vue.js"></script>
+<script src="../../express-ciel/public/vue-resource.js"></script>
+<link rel="stylesheet" href="../../express-ciel/public/bootstrap.css" />
+<link rel="stylesheet" href="../../express-ciel/public/animate.css" />
+<body>
+
+    <div id="app">
+
+        <button  @click="aa()" type="button">aaa</button>
+        <h1 id="h1" ref="h1">2222</h1>
+
+        <rrrr ref="rrrr"> </rrrr>
+    </div>
+
+</body>
+<script>
+    var vue = new Vue({
+        el: "#app",
+        data: {
+            text: "ciel swift",
+            flag1: true
+        },
+        methods: {
+            aa(){
+                console.log(this.$refs.h1);
+                 this.$refs.rrrr.aae();
+            }
+        },
+        components: {
+            rrrr: {
+                template: "<h5>88</h5>",
+                methods: {
+                    aae(){
+                        alert("aa")
+                    }
+                }
+            },
+        }
+    });
+</script>
+</html>

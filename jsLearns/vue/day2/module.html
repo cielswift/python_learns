@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件 和 模块化</title>
+</head>
+<script src="../../express-ciel/public/vue.js"></script>
+<script src="../../express-ciel/public/vue-resource.js"></script>
+<link rel="stylesheet" href="../../express-ciel/public/bootstrap.css" />
+<link rel="stylesheet" href="../../express-ciel/public/animate.css" />
+
+<body>
+    <template id="h2">
+        <h2>ciel swift</h2>
+    </template>
+    <template id="cc">
+        <h2>eeeeee</h2>
+    </template>
+
+
+    <a href="../day1/xia.html">sssssssss</a>
+    <div id="app">
+
+      <button type="button" @click="sya()">a</button>
+     <button type="button" @click="ss()">b</button>
+
+       <my-h2></my-h2>
+       <ot-h2></ot-h2>
+        <login></login>
+        <logout></logout>
+
+         <button type="button" @click="comName='login'">c</button>
+         <button type="button" @click="comName='logout'">d</button>
+
+        <transition
+                enter-active-class="animated bounceIn"
+                leave-active-class="hinge"
+                :duration="{enter :200 ,leave:400}">
+
+             <component :is="comName"></component> <!--要显示的组件名称用变量代替-->
+
+        </transition>
+
+
+        <button type="button" class="btn-success" @click="chan()">rrr</button>
+
+
+        <login v-bind:bgn="name"></login> <!--绑定父组件数据-->
+        <funs v-on:funs="show"></funs> <!--绑定父对象的方法-->
+
+    </div>
+
+</body>
+<script>
+     var h2 =  Vue.extend({  //定义组件
+        template: "<h2>hi {{msgg}}</h2>",  //引用自己data返回值的属性
+         data(){
+            return {
+                msgg : "xiape333ixin",
+            }
+         },
+         created(){ //组件生命周期
+
+         }
+    });
+
+    Vue.component("myH2",h2); //直接在页面  <my-h2></my-h2>组件名称 ;注意定义使用驼峰,使用需要用-
+
+     var h22 = {
+         template : "#h2" //简化的创建方式
+     };
+
+
+     Vue.component("otH2",{
+         template: "#h2",      //引用
+     });
+
+
+    var app = new Vue({
+        el:"#app",
+        data:{
+            name : "xiapeixin",
+            comName: "" //绑定组件名称
+        },methods:{
+            sya(){
+                alert(1);
+            },
+            ss : function () {
+                alert(2);
+            },
+            chan(){
+                this.name="夏培鑫"
+            },
+            show(name){
+                alert("aaa:"+name);
+            }
+        },components:{  //私有组件
+            login:{
+                template: "<h5>{{bgn}}</h5>",
+                props: ['bgn'], //把<login v-bind:bn="name"></login> 定义的bn 在这里在定义一下,才能使用,只读的,methods可以定义方法修改
+            },
+            logout:{
+                template: "#cc"
+            },
+            funs:{
+                template: "<h1 @click='sss()'>fffff</h1>",
+                data(){
+                    return {
+                        xxx:"夏培鑫"
+                    }
+                },
+                methods: {
+                    sss(){
+                       this.$emit('funs',this.xxx) //<funs v-on:funs="show"></funs> 调用绑定的父对象的方法,第二个之后都是参数
+                    }
+                }
+            }
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>222222</title>
+</head>
+<script src="/vue.js"></script>
+<link rel="stylesheet" href="/bootstrap.css"/>
+<script src="/vue-resource.js"></script>
+<script src="/axios.js"></script>
+<body>
+
+<div id="app">
+
+    <div>
+        <h1> HEAD </h1>
+        <div>{{head}}</div>
+
+        <div class="text-danger">
+            当前token
+            <div>
+                {{token}}
+            </div>
+        </div>
+    </div>
+
+
+    <hr size="50"/>
+
+    <div>
+        <h1> BODY </h1>
+        <div>{{body}}</div>
+    </div>
+
+    <input type="text" v-model="url" placeholder="url" weight="800px">
+
+    <button type="button" class="btn btn-info" @click="uurl()"> uurl</button>
+
+    <button type="button" class="btn btn-success" @click="login()"> login</button>
+
+    <button type="button" class="btn btn-success" @click="det1()"> demo/export/test1</button>
+
+    <button type="button" class="btn btn-success" @click="gg()"> gggggggggg</button>
+</div>
+
+</body>
+<script>
+
+    Vue.http.interceptors.push((request, next) => {
+        request.headers.set('Authentication', "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqd3RMb2FkIjoie1widXNlcklEXCI6XCIxMTk3MDQxNDY2MTU3OTE2MTYxXCIsXCJ1c2VybmFtZVwiOlwiYWRtaW5cIn0iLCJyYW5kb21fc3RyIjoiMDQyOTBmMWJkNTAzZGE1Y2FjZTUwZmY5NDE4ZGZmODMiLCJleHAiOjE1Nzg0Njk5NDMsImlhdCI6MTU3ODQ2ODE0M30.2vsIyLxa7fcY2t5_Nhr1QFYRRPwKW-JVRz26XBfNt0o");
+        request.headers.set("Access-Control-Allow-Origin", "*");
+        request.headers.set('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With, yourHeaderFeild');
+        request.headers.set('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+        request.headers.set("Access-Control-Allow-Credentials", "true");
+        request.headers.set('xiapeixin', '9999999999999999');
+        next((response) => {
+            return response
+        })
+    })
+
+    const v = new Vue({
+        el: "#app",
+        data: {
+            token: "null",
+            head: "null",
+            body: "null",
+            url: "",
+
+        }, methods: {
+            login() {
+
+                this.$http.post("http://127.0.0.1:2300/web/login?username=admin&password=123456", {}, {emulateJSON: true})
+                    .then((result) => {
+                        this.head = result.headers;
+                        this.body = result.body;
+                        this.token = result.headers.map.authentication.toString();
+                    });
+
+            },
+
+            det1() {
+
+                axios.get('http://127.0.0.1:2300/web/demo/export/test1',
+                    {
+                        headers: {
+                            'Authentication': this.token,
+                            "Access-Control-Allow-Origin": "*",
+                            'Access-Control-Allow-Headers': 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With, yourHeaderFeild',
+                            'Access-Control-Allow-Methods': 'PUT, POST, GET, DELETE, OPTIONS'
+                        },
+                        params: {
+                            "name": "xia",
+                            "age": "22"
+                        }
+                    }
+                ).then(function (response) {
+                    v.head = response.headers;
+                    v.body = response.data;
+                })
+                    .catch(function (error) {
+                        v.head = error.headers;
+                        v.body = error.data;
+                    });
+
+            },
+
+            uurl() {
+
+
+                axios.get(this.url,
+
+                    {
+                        headers: {
+                            'Authentication': this.token,
+                            "Access-Control-Allow-Origin": "*",
+                            'Access-Control-Allow-Headers': 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With, yourHeaderFeild',
+                            'Access-Control-Allow-Methods': 'PUT, POST, GET, DELETE, OPTIONS'
+
+                        }
+
+                    }
+                ).then(function (response) {
+                    v.head = response.headers;
+                    v.body = response.data;
+                })
+                    .catch(function (error) {
+                        v.head = error.headers;
+                        v.body = error.data;
+                    });
+
+            },
+            gg() {
+
+                axios.get("http://127.0.0.1:2300/provider/csor"
+                    // ,
+                    // {
+                    //     headers: {
+                    //         'Authentication' : this.token,
+                    //         "Access-Control-Allow-Origin": "*",
+                    //         'Access-Control-Allow-Headers': 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With, yourHeaderFeild',
+                    //         'Access-Control-Allow-Methods': 'PUT, POST, GET, DELETE, OPTIONS'
+                    //
+                    //     }
+                    //
+                    // }
+
+                ).then(function (response) {
+                    v.head = response.headers;
+                    v.body = response.data;
+                })
+                    .catch(function (error) {
+                        v.head = error.headers;
+                        v.body = error.data;
+                    });
+
+            }
+
+        }
+    })
+
+
+    // var vm_ajax = new Vue({
+    //     el:"#ajax_id",
+    //     data:{
+    //         msg:null,
+    //     },
+    //     methods:{
+    //         ajax_get(){
+    //             this.$http.get("http://127.0.0.1:2500/").then((result) =>{
+    //
+    //               this.msg=result;  //成功方法;
+    //
+    //             },
+    //
+    //             (result) =>{
+    //              this.msg=result;   //失败方法;
+    //             });
+    //
+    //         },
+    //         ajax_post(){
+    //             this.$http.post("http://127.0.0.1:2500/", {} ,{emulateJSON : true})
+    //             .then((result) =>{
+    //                 this.msg=result.body;
+    //             });
+    //         },
+    //
+    //         ajax_jsonp(){
+    //             this.$http.jsonp("http://127.0.0.1:2500/").then((result) =>{
+    //
+    //                 alert("success");
+    //                 this.msg=result;
+    //
+    //             },(result) =>{
+    //
+    //                 alert("defeat");
+    //
+    //                 this.msg=result;
+    //             });
+    //         }
+    //     }
+    // });
+</script>
+</html>

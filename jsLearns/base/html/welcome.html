@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <title>胜多负少</title>
+</head>
+<script src="./vue.js"></script>
+<body>
+
+    <div id="app" @click="change()">
+        {{ message }}
+    </div>
+
+</body>
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello Vue!'
+        },
+        methods:{
+            change:function () {
+                this.message="aa";
+            }
+        }
+    })
+
+</script>
+</html>
