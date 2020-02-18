@@ -23,12 +23,11 @@ cur.close()
 conn.close()
 
 
-while 1:
-    r = requests.get('https://zhuanlan.zhihu.com/p/66281022')
+r = requests.get('https://zhuanlan.zhihu.com/p/66281022')
 
-    print(r.status_code)
-    print(r.headers['content-type'])
+print(r.status_code)
+print(r.headers['content-type'])
 
-    print(r.text)
+print(r.text)
 
-    # print(r.json())
+# print(r.json())
