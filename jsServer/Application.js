@@ -10,7 +10,7 @@ option = {
 };
 
 client = redis.createClient(option);
-
+    
 const app = new express();
 
 //引入route模块
@@ -21,6 +21,14 @@ app.use(express.static('public')); //静态资源
 //加载admin模块
 app.use("/admin",admin);
 
+function uuidRandom() {
+    function S4() {
+        return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+    }
+    return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+}
+
+
 app.get('/', function (request, response) {
     let ip = request.ip.match(/\d+\.\d+\.\d+\.\d+/).toString();
         client.get(ip.toString(), function (err, reply) {
@@ -30,9 +38,21 @@ app.get('/', function (request, response) {
             client.set(ip.toString(), parseInt(reply) + 1);
         }
     });
-    response.send("hello");
+
+     let a = 5;
+     let b = a || "null--";
+     console.log(b);
+
+     let uuid = uuidRandom();
+    console.log(uuid);
+
+    client.set(uuid,"xiapeixin");
+
+    response.send(uuid);
     response.end();
 });
+
+
 
 
 var server = app.listen(2500, function () {
