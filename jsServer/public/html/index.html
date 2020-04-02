@@ -10,7 +10,6 @@
 <link rel="stylesheet" href="/jscss/bootstrap.css"/>
 <script src="/jscss/vue-resource.js"></script>
 <script src="/jscss/axios.js"></script>
-
 <script src="/jscss/Chart.bundle.js"></script>
 <body>
 
@@ -27,7 +26,6 @@
         </div>
     </div>
 
-
     <hr size="50"/>
 
     <div>
@@ -43,7 +41,8 @@
 
     <button type="button" class="btn btn-success" @click="det1()"> demo/export/test1</button>
 
-    <button type="button" class="btn btn-success" @click="gg()"> gggggggggg</button>
+    <button type="button" class="btn btn-success"  @click="gg()"> gggggggggg</button>
+
 </div>
 
     <div>
@@ -73,6 +72,9 @@
             url: "",
 
         }, methods: {
+
+
+
             login() {
 
                 this.$http.post("http://127.0.0.1:2300/web/login?username=admin&password=123456", {}, {emulateJSON: true})

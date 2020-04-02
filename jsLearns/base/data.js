@@ -10,67 +10,16 @@
     function f({name,food}) {
         console.log(name,food)
     }
+
     f(obj);
 
     const arr = [4, 6, -1, 3, 10, 4];
     console.log(...arr);  //展开运算符...可用于提取数组的各个元素
 
-
     function myFunc(...args) {  //类似于java的可变参数;
         console.log(args[0] + args[1]);
     }
     myFunc("吖", "额", "嚷嚷");
-
-    
-    const myPromise = new Promise(function (f,u) {
-      //f(88); //'Success++++++++++++++++++++++: ' + data
-       u(99); //Error+++++++++++++++++++++: ' + err
-    });
-
-
-    // Promise 对象是由关键字 new 及其构造函数来创建的。构造函数会，把一个叫做“处理器函数”（executor function）的函数作为它的参数。
-    // 这个“处理器函数”接受两个函数resolve 和 reject 作为其参数。当异步任务顺利完成且返回结果值时，会调用 resolve 函数，
-    // 而当异步任务失败且返回失败原因（通常是一个错误对象）时，会调用reject 函数
-myPromise
-  .then(function(data) {
-    console.error('Success++++++++++++++++++++++: ' + data);
-   })
-   .catch(function(err) {
-    console.error('Error+++++++++++++++++++++: ' + err);});
-
-
-        //async 告诉程序这是一个异步操作，await 是一个操作符，即 await 后面是一个表达式
-    // 当这个 async 函数返回一个值时，Promise 的 resolve 方法会负责传递这个值；　当 async 函数抛出异常时
-    // Promise 的 reject 方法也会传递这个异常值。async 函数中可能会有 await 表达式，await表达式会使 async 函数暂停执行，
-    // 直到表达式中的 Promise 解析完成后继续         执行 async中await 后面的代码并返回解决结果
-
-    //假如这个表达式如果返回的是一个Promise 对象， 那么它的返回值，实际上就是 Promise 的回调函数 resolve 的参数，
-    // 如果这个Promise rejected 了，await 表达式会把 Promise 的异常抛出。
-　　//假如这个表达式如果返回的是一个常量，那么会把这个常量转为Promise.resolve(xx)，同理如果没有返回值也是Promise.resolve(underfind)
-
-       function say() {
-        return new Promise(function(resolve, reject) {
-            setTimeout(function() {
-                resolve("DASDSADASD");
-            }, 1000);
-        });
-    }
-
-     async function testAsync() {
-        // const data = await "hello await"; //返回常量
-        // return data;
-
-         const data  = await say();  //返回Promise 对象;
-         return data;
-    }
-
-    const data = testAsync().then(function (data) {
-        console.log(data);
-        console.log("^^^^^^^^^^SUCCESS^^^^^^^^^^^^^^^^^^^^^^^");
-    }).catch(function (data) {
-        console.log(data);
-        console.log("^^^^^^^^^^^^^^^ERROR^^^^^^^^^^^^^^^^^^");
-    })
 
 })();
 
@@ -236,7 +185,7 @@ function Array22() {
         console.log(this);
         this.it.for();
     }
-    
+
 }
 
 

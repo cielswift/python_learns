@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>spring_alibaba</title>
+</head>
+<link rel="shortcut icon" href="/favicon.ico">
+<script src="/jscss/vue.js"></script>
+<link rel="stylesheet" href="/jscss/bootstrap.css"/>
+<script src="/jscss/axios.js"></script>
+<script src="/jscss/echarts.js"></script>
+<script src="/jscss/address.js"></script>
+<body>
+<div id="app">
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-12">
+                {{body}}
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-8">
+                <input type="text" v-model="url" placeholder="url" style="width:90%">
+            </div>
+
+            <div class="col-md-4">
+
+                <button type="button" class="btn btn-success" @click="login()">LOGIN</button>
+                <button type="button" class="btn btn-warning" @click="req()">req</button>
+                <button type="button" class="btn btn-warning" @click="imga()">img</button>
+
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <select name="sheng" v-model="shen" class="col-md-2">
+                <option :value="sh.ID" v-for="sh in shen_s()">{{sh.AddName}}</option>
+            </select>
+
+            <select name="shi" v-model="shi" class="col-md-2">
+                <option :value="sh.ID" v-for="sh in city_s(shen)">{{sh.AddName}}</option>
+            </select>
+
+            <select name="xian" v-model="xian" class="col-md-2">
+                <option :value="sh.ID" v-for="sh in county_s(shi)">{{sh.AddName}}</option>
+            </select>
+
+            <div>
+                <input name="add" v-model="addr()" class="col-md-6"/>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <div>
+                    <div id="main" style="width: 300px;height:200px;"></div>
+                </div>
+                <img :src="img" height="300"/>
+                <video :src="video" height="300" width="500" controls="controls" preload poster></video>
+                <a class="btn-success" href="/html/index.html"> GO GO GO</a>
+
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+<script>
+
+
+    const v = new Vue({
+        el: "#app",
+        data: {
+            Authentication: "",
+            token: "null",
+            head: "null",
+            body: "null",
+            url: "http://127.0.0.1:5210/gateway/con/consumer/d1",
+            img: "http://nginx.ciel.cl/image/17.jpg1",
+            video: "http://127.0.0.1/video/elizabeth.mp41",
+            shen: "",
+            shi: "",
+            xian: "",
+
+        }, methods: {
+
+            shen_s() {
+                return site_address.filter(function (t, i) {
+                    if (t.TopID === 0) {
+                        return t;
+                    }
+                });
+            },
+            city_s(s) {
+                return site_address.filter(function (t, i) {
+                    if (t.TopID === s) {
+                        return t;
+                    }
+                });
+            },
+            county_s(s) {
+                return site_address.filter(function (t, i) {
+                    if (t.TopID === s) {
+                        return t;
+                    }
+                });
+            },
+            addr() {
+
+                let addz = site_address.filter(function (t, i) {
+                    if (t.ID === this.shen) {
+                        return t;
+                    } else if (t.ID === this.shi) {
+                        return t;
+                    } else if (t.ID === this.xian) {
+                        return t;
+                    }
+                }, this);
+
+                return JSON.stringify(addz);
+            },
+            loginit(){
+                const params =  new FormData();
+                params.append('username',  'admin');
+                params.append('password', "123456");
+                return params;
+            },
+            login() {
+                axios.post("http://127.0.0.1:8970/web/login",this.loginit()).then(function (response) {
+
+                    console.log("登录成功");
+                    v.body = response;
+                    //v.Authentication= response.headers
+
+                }).catch(function (error) {
+
+                    console.log("登录失败");
+                    v.body = error;
+                });
+
+            },
+            req() {
+                axios.put(this.url
+                    ,{
+                        headers: {
+                            'Authentication': "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqd3RMb2FkIjoie1widXNlcklEXCI6XCIxMjI5NjgxNjg0OTMxMDE4NzU0XCIsXCJ1c2VybmFtZVwiOlwiYWRtaW5cIn0iLCJyYW5kb21fc3RyIjoiODY0MGU1MDE3NGQ3MGY1M2MwZGE1NTNjZWExMzFmY2EiLCJleHAiOjE1ODQxNTc4OTUsImlhdCI6MTU4NDE1NDI5NX0.Dy86Jgf_EUs1ZImtL-DDWdsFyWFFsGp_Bm-ctyufO84",
+                            // "Access-Control-Allow-Origin": "*",
+                            // 'Access-Control-Allow-Headers': 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With, yourHeaderFeild',
+                            // 'Access-Control-Allow-Methods': 'PUT, POST, GET, DELETE, OPTIONS'
+                        }
+                        // ,
+                        // params: {
+                        //     "name": "xia"
+                        // }
+                    }
+                ).then(function (response) {
+
+                    console.log("success");
+                    v.body = response;
+                }).catch(function (error) {
+
+                    console.log("error");
+                    v.body = error.data;
+                });
+
+            },
+
+            imga() {
+                let num = this.img.match(/\d{2}/g);
+
+                let n = parseInt(num) + 1;
+
+                this.img = this.img.replace(num, n);
+            }
+        }
+    });
+
+</script>
+
+<script>
+    // 绘制图表。
+    echarts.init(document.getElementById('main')).setOption({
+        series: {
+            type: 'pie',
+            data: [
+                {name: 'A', value: 200},
+                {name: 'B', value: 600},
+                {name: 'C', value: 400},
+                {name: 'D', value: 300},
+                {name: 'E', value: 100},
+                {name: 'F', value: 900}
+            ]
+        }
+    });
+</script>
+
+</html>

@@ -1,4 +1,3 @@
-
 import tkinter as tk  # 使用Tkinter前需要先导入
 
 # 第1步，实例化object，建立窗口window
